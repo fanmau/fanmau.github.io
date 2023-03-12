@@ -91,7 +91,7 @@ export function getSortedPostsData() {
             const slug = [subdirectory, filename.replace(/\.md$/, '').concat('.html')].join("/")
         
             // Read markdown file as string
-            const fullPath = path.join(Directory, [subdirectory, filename].join("\\"))
+            const fullPath = path.join(Directory, [subdirectory, filename].join("//"))
             const fileContents = fs.readFileSync(fullPath, 'utf8')
         
             // Use gray-matter to parse the post metadata section
@@ -121,7 +121,7 @@ export function getSortedPostsData() {
 export async function getPostData(slug:any) {
 
   const aPath = path.join(process.cwd(), 'blog')
-  const id = slug.toString().split(",").join("\\").replace(/\.html$/, '')
+  const id = slug.toString().split(",").join("//").replace(/\.html$/, '')
   const fullPath = path.join(aPath, `${id}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
 
