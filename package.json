@@ -10,7 +10,7 @@
     "lint": "next lint",
     "fanma": "next build && next export",
     "sitemap": "next build && next export && node generate-sitemap.js",
-    "fanmap": "next build && next-sitemap --config next-sitemap.config.js"
+    "fanmap": "next build && next-sitemap --config next-sitemap.config.js && next export"
   },
   "dependencies": {
     "@types/node": "18.14.4",
