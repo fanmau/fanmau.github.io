@@ -20,6 +20,8 @@ export function getAllPostIds() {
       const directoryPath = path.join(Directory, subdirectory)
       const filenames = fs.readdirSync(directoryPath)
         .filter(filename => filename.endsWith('.md'))
+
+        
   
       return filenames.map(filename => ({
         params: {
@@ -76,6 +78,8 @@ export function getAllPostIds() {
 
 export function getSortedPostsData() {
 
+  const path = require('path');
+
     const Directory = path.join(process.cwd(), 'blog')
     const subdirectories = fs.readdirSync(Directory, { withFileTypes: true })
       .filter(dirent => dirent.isDirectory())
@@ -120,8 +124,10 @@ export function getSortedPostsData() {
 
 export async function getPostData(slug:any) {
 
+  const path = require('path');
   const aPath = path.join(process.cwd(), 'blog')
-  const id = slug.toString().split(",").join("//").replace(/\.html$/, '')
+  const idjoin = slug.toString().split(",").join("//").replace(/\.html$/, '')
+  const id = path.join(idjoin);
   const fullPath = path.join(aPath, `${id}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
 

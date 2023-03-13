@@ -1,8 +1,9 @@
-import Layout, { name, siteTitle } from '../../components/layout'
+import Layout, { name, siteTitle, desc, baseURL, author, authorurl } from '@/components/layout'
 import { getAllPostIds, getPostData } from '../../lib/blog'
 import Head from 'next/head'
 import { GetStaticProps, GetStaticPaths } from 'next'
 import Date from '../../components/date'
+import { useRouter } from 'next/router'
 
 export default function Post({
   postData
@@ -18,6 +19,28 @@ export default function Post({
     const nameb = " - "
     const namec = name;
     const title = namea.concat(nameb,namec);
+    const router = useRouter();
+
+    function addProductJsonLd() {
+      return {
+        __html: `{
+          "@context": "http://schema.org",
+          "@type": "Article",
+          "name": "${name}",
+          "headline": "${postData.title}",
+          "author": {
+            "@type": "Person",
+            "name": "${author}",
+            "url": "${authorurl}"
+          },
+          "datePublished": "${postData.date}",
+          "image": "",
+          "articleSection": "",
+          "url": "https://fanmav.github.io${router.asPath}"
+        }
+    `,
+      };
+    }
 
   return (
     <Layout>
@@ -29,8 +52,8 @@ export default function Post({
         <meta property="og:site_name" content={name} />
         <meta property="og:title" content={siteTitle} />
         <meta property="og:locale" content="zh-CN" />
-        <meta property="og:url" content="https://fanmav.github.io/" />
-        <meta property="og:image" content="https://fanmav.github.io/images/Avatar.jpg" />
+        <meta property="og:url" content={baseURL} />
+        <meta property="og:image" content="https://fanmav.github.io/images/fanma.jpg" />
         {/* <meta property="og:updated_time" content={date} /> */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
@@ -58,4 +81,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       postData
     }
   }
+}
+
+export const Comment = () => {
+  const router = useRouter()
+  const slug = (router.query.slug as string[]) || []
+  const di = slug.join('/')
+
+  return ({
+    dir: {di},
+  })
 }

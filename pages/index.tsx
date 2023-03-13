@@ -1,11 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { getSortedPostsData } from '../lib/blog'
+import { getSortedPostsData } from '@/lib/blog'
 import { GetStaticProps } from 'next'
 import { Sonsie_One } from 'next/font/google'
-import styles from '../styles/Home.module.css'
-import Layout, { name, siteTitle, desc } from '../components/layout'
-import Date from '../components/date'
+import styles from '@/styles/Home.module.css'
+import Layout, { name, siteTitle, desc, baseURL, author, authorurl } from '@/components/layout'
+import { buildTime } from '@/components/BuildTime'
+import Date from '@/components/date'
 
 
 
@@ -29,6 +30,26 @@ export default function Home({
   const namec = name;
   const title = namea.concat(nameb,namec);
   
+  function addProductJsonLd() {
+    return {
+      __html: `{
+        "@context": "http://schema.org",
+        "@type": "Article",
+        "name": "${name}",
+        "headline": "${title}",
+        "author": {
+          "@type": "Person",
+          "name": "${author}",
+          "url": "${authorurl}"
+        },
+        "datePublished": "${buildTime}",
+        "image": "${baseURL}/images/fanma.jpg",
+        "articleSection": "${desc}",
+        "url": "${baseURL}"
+      }
+  `,
+    };
+  }
 
   return (
     <Layout home>
@@ -40,10 +61,15 @@ export default function Home({
         <meta property="og:site_name" content={name} />
         <meta property="og:title" content={siteTitle} />
         <meta property="og:locale" content="zh-CN" />
-        <meta property="og:url" content="https://fanmav.github.io/" />
-        <meta property="og:image" content="https://fanmav.github.io/images/Avatar.jpg" />
+        <meta property="og:url" content={baseURL} />
+        <meta property="og:image" content={"https://fanmau.github.io/images/fanma.jpg"} />
         {/* <meta property="og:updated_time" content={date} /> */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={addProductJsonLd()}
+          key="product-jsonld"
+        />
       </Head>
       <section className={styles.main}>
             <div className={styles.title}>
@@ -86,7 +112,7 @@ export const getStaticProps: GetStaticProps = async () => {
       })
     return {
       props: {
-        allPostsData: formattedPosts
+        allPostsData: formattedPosts,
       }
     }
 }

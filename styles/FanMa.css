@@ -164,6 +164,21 @@ p code {
     padding-bottom: 3rem;
 }
 
+.a404 {
+    width: 98rem;
+    margin: 22rem auto;
+    padding: 12rem;
+    background: var(--color);
+    border: 1px solid #DFE1E5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.a404 h1{
+    display: block;
+}
+
 @media (max-width:1600px) {
   .fanma, .main, .express, .back {
     width: 100%;
@@ -191,3 +206,4 @@ p code {
         font-size: 1.6rem;
     }
 }
+
