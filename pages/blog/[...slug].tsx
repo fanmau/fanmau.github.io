@@ -11,6 +11,9 @@ export default function Post({
   postData: {
     title: string
     date: string
+    ctime: string
+    mtime: string
+    wordCount: string
     contentHtml: string
   }
 }) {
@@ -58,8 +61,10 @@ export default function Post({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <article>
-        <h1 className='title'>{postData.title}<div className='title-date'><small><Date dateString={postData.date} /></small></div></h1>
-        
+        <h1 className='title'>{postData.title}<div className='title-date'><small><Date dateString={postData.date} /> - </small></div></h1>
+        <div>{postData.mtime}</div>
+        <div>{postData.ctime}</div>
+        <div>文章字数为：{postData.wordCount}</div>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
     </Layout>

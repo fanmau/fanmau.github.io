@@ -15,6 +15,8 @@ const sonsie = Sonsie_One({
   weight: '400'
 });
 
+
+
 export default function Home({
     allPostsData
   }: {
@@ -50,6 +52,8 @@ export default function Home({
   `,
     };
   }
+
+  const totalPosts = allPostsData.length
 
   return (
     <Layout home>
@@ -88,13 +92,14 @@ export default function Home({
             </li>
           ))}
         </ul>
-        {/* <div className={styles.info}>
+        <div className={styles.info}><span>文章： {totalPosts}篇</span></div>
+        {/* 
           <span>作者：</span>
-          <span>文章： 篇</span>
+          
           <span>共计：字</span>
           <span>网站创建：</span>
           <span>最新更新：</span>
-        </div> */}
+         */}
       </section>
     </Layout>
   )

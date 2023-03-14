@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
 
-const isProd = process.env.NODE_ENV === 'production'
+// const isProd = process.env.NODE_ENV === 'production'
 const nextConfig = {
     trailingSlash: false,
-    assetPrefix: isProd ? 'https://fanmau.github.io' : undefined,
+    // router: { base: 'https://fanmau.github.io' },
+    // assetPrefix: isProd ? 'https://fanmau.github.io' : undefined,
     // exportPathMap: async function (defaultPathMap) {
     //   return {
     //     '/sitemap.xml': { page: '/sitemap.xml' },
