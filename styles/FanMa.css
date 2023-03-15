@@ -2,7 +2,6 @@
     max-width: var(--max-width);
     min-height: 100vh;
     background: #f2f2f2;
-    display: flex;
     margin: 0 auto;
 }
 
@@ -79,10 +78,10 @@
     width: var(--main-width);
     margin: 0 auto;
     padding: 8rem 0;
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: center; */
 }
 
 .book {
@@ -92,6 +91,7 @@
     border: 1px solid #DFE1E5;
     padding: 5rem 8rem;
     background: #fafafa;
+    display: block;
 }
 
 p code {
@@ -102,12 +102,17 @@ p code {
     border-radius: 0.3rem;
 }
 
-.pre {
+
+.remark-highlight {
     width: 100%;
-    word-break:break-all;
-    word-wrap:break-word;
+    /* position: relative; */
+}
+
+.remark-highlight code{
+    width: 100%;
+    white-space:nowrap;
     display: block;
-    overflow: hidden;
+    word-break: break-all;
 }
 
 .express {
@@ -180,11 +185,11 @@ p code {
 }
 
 @media (max-width:1600px) {
-  .fanma, .main, .express, .back {
+  .fanma {
     width: 100%;
   }
-  .express {
-    padding: 0 5rem 5rem 5rem;
+  .main, .express, .back {
+    width: 90%;
   }
   .back {
     padding: 0 5rem;
@@ -193,17 +198,13 @@ p code {
 
 @media (max-width:1520px) {
     .book {
-        border: 0px solid #DFE1E5;
-        padding: 0rem 5rem;
+        border: 1px solid #DFE1E5;
     }
 }
 
-@media (max-width:988px) {
-    .header {
-        font-size: 1.6rem;
-    }
-    .express {
-        font-size: 1.6rem;
+
+@media (max-width:1220px) {
+    .main, .express, .back {
+        width: 90%;
     }
 }
-
