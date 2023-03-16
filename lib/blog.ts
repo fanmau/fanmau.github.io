@@ -4,6 +4,7 @@ import matter from 'gray-matter'
 import { remark } from 'remark'
 import html from 'remark-html'
 import remarkPrism from "remark-prism";
+import moment from 'moment-timezone'
 // const postsDirectory = path.join(process.cwd(), 'blog')
 
 
@@ -194,10 +195,15 @@ export async function getPostData(slug:any) {
 
   const filePath = fullPath;
   const fileStat = fs.statSync(filePath);
-  const mtime = fileStat.mtime.toLocaleString();
-  const ctime = fileStat.birthtime.toLocaleString();
-  // const {mtime} = fs.statSync(fullPath);
+  const mtime = fileStat.mtime.toISOString();
+  const ctime = fileStat.birthtime.toISOString();
+
+  // const amtime = moment.tz(fileStat.mtime, 'Asia/Shanghai').format('YYYY-MM-DDTHH:mm:ss.sssZ');
+  // const actime = moment.tz(fileStat.birthtime, 'Asia/Shanghai').format('YYYY-MM-DDTHH:mm:ssZ');
+  
   console.log(ctime);
+  // console.log(`Modified Time: ${amtime}`);
+  // console.log(`Created Time: ${actime}`);
   // Combine the data with the id and contentHtml
   return {
     ctime,

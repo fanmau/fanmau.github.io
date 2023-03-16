@@ -19,6 +19,7 @@
     "date-fns": "^2.29.3",
     "gray-matter": "^4.0.3",
     "highlight.js": "^11.7.0",
+    "moment-timezone": "^0.5.41",
     "next": "13.2.3",
     "next-sitemap": "^4.0.5",
     "prismjs": "^1.29.0",
