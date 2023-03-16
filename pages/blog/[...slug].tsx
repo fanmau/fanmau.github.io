@@ -19,7 +19,7 @@ export default function Post({
 }) {
 
     const namea = postData.title;
-    const nameb = " - "
+    const nameb = " | "
     const namec = name;
     const title = namea.concat(nameb,namec);
     const router = useRouter();

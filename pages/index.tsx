@@ -28,9 +28,9 @@ export default function Home({
   }) {
   // const title = [ siteTitle, name ];
   const namea = siteTitle;
-  const nameb = " - "
+  const nameb = " | 这是 FanMa 开发的一个静态网站生成器！"
   const namec = name;
-  const title = namea.concat(nameb,namec);
+  const title = namea.concat(nameb);
   
   function addProductJsonLd() {
     return {
