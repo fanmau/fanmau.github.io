@@ -196,17 +196,17 @@ export async function getPostData(slug:any) {
   const filePath = fullPath;
   const fileStat = fs.statSync(filePath);
   const mtime = fileStat.mtime.toISOString();
-  const ctime = fileStat.birthtime.toISOString();
+  const birthtime = fileStat.birthtime.toISOString();
 
   // const amtime = moment.tz(fileStat.mtime, 'Asia/Shanghai').format('YYYY-MM-DDTHH:mm:ss.sssZ');
   // const actime = moment.tz(fileStat.birthtime, 'Asia/Shanghai').format('YYYY-MM-DDTHH:mm:ssZ');
   
-  console.log(ctime);
+  console.log(birthtime);
   // console.log(`Modified Time: ${amtime}`);
   // console.log(`Created Time: ${actime}`);
   // Combine the data with the id and contentHtml
   return {
-    ctime,
+    birthtime,
     mtime,
     slug,
     wordCount,

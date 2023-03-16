@@ -11,7 +11,7 @@ export default function Post({
   postData: {
     title: string
     date: string
-    ctime: string
+    birthtime: string
     mtime: string
     wordCount: string
     contentHtml: string
@@ -36,7 +36,7 @@ export default function Post({
             "name": "${author}",
             "url": "${authorurl}"
           },
-          "datePublished": "${postData.date}",
+          "datePublished": "${postData.birthtime}",
           "image": "",
           "articleSection": "",
           "url": "https://fanmav.github.io${router.asPath}"
@@ -66,10 +66,9 @@ export default function Post({
         />
       </Head>
       <article>
-        <h1 className='title'>{postData.title}<div className='title-date'><small><Date dateString={postData.date} /></small></div></h1>
-        <div>{postData.mtime}</div>
-        <div>{postData.ctime}</div>
-        <div>文章字数为：{postData.wordCount}</div>
+        <h1 className='title'>{postData.title}<div className='title-date'><small><Date dateString={postData.date} /> - <span>约 {postData.wordCount} 字</span></small></div></h1>
+        {/* <div>{postData.mtime}</div>
+        <div>{postData.ctime}</div> */}
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
     </Layout>

@@ -88,10 +88,20 @@
     width: 100%;
     min-height: 100vh;
     font-size: 2rem;
+    /* color: #2a2c30; */
+    /* color: #252b35; */
     border: 1px solid #DFE1E5;
     padding: 5rem 8rem;
     background: #fafafa;
     display: block;
+}
+
+.book p {
+    padding: 1rem 0;
+}
+
+.book small {
+    font-size: 1.6rem;
 }
 
 p code {
