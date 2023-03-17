@@ -98,6 +98,14 @@ export function getSortedPostsData() {
             // Read markdown file as string
             const fullPath = path.join(Directory, [subdirectory, filename].join("//"))
             const fileContents = fs.readFileSync(fullPath, 'utf8')
+
+              // 统计中文字符数
+            const chineseCount = fileContents.match(/[\u4e00-\u9fa5]/g).length;
+
+            // 统计英文单词数
+            const englishCount = fileContents.match(/[a-zA-Z]+/g).length;
+
+            const wordCount = chineseCount + englishCount
         
             // Use gray-matter to parse the post metadata section
             const matterResult = matter(fileContents)
@@ -105,6 +113,7 @@ export function getSortedPostsData() {
             // Combine the data with the id
             return {
               slug,
+              wordCount,
               ...(matterResult.data as { date: string; title: string })
             }
           })
@@ -214,3 +223,41 @@ export async function getPostData(slug:any) {
     ...(matterResult.data as { date: string; title: string; })
   }
 }
+
+const contentDirectory = 'blog'; // 替换成你的文章目录
+
+export const calculateWordCount = (): number => {
+
+let totalWordCount = 0;
+
+// 遍历文章目录下所有的 .md 文件
+const readDirectory = (dir: string) => {
+  fs.readdirSync(dir).forEach(item => {
+    // 忽略文件名以 "." 开头的文件或文件夹
+    if (item[0] === '.')
+      return;
+    const itemPath = path.join(dir, item);
+    const stats = fs.statSync(itemPath);
+
+    if(stats.isFile() && itemPath.endsWith('.md')) { // 如果是 .md 文件
+      const fileContents = fs.readFileSync(itemPath, 'utf8');
+
+      // 统计中文字符数
+      const chineseCount = fileContents.match(/[\u4e00-\u9fa5]/g)?.length || 0;
+
+      // 统计英文单词数
+      const englishCount = fileContents.match(/[a-zA-Z]+/g)?.length || 0;
+
+      totalWordCount += chineseCount + englishCount;
+    } else if(stats.isDirectory()) { // 如果是文件夹
+      readDirectory(itemPath);
+    }
+  });
+}
+
+readDirectory(contentDirectory);
+
+
+  return totalWordCount;
+};
+console.log(`全站总字数为：${calculateWordCount()}`);

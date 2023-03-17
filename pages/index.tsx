@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import { getSortedPostsData } from '@/lib/blog'
+import { calculateWordCount, getSortedPostsData } from '@/lib/blog'
 import { GetStaticProps } from 'next'
 import { Sonsie_One } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
@@ -18,13 +18,15 @@ const sonsie = Sonsie_One({
 
 
 export default function Home({
-    allPostsData
+    allPostsData,
+    totalWordCount,
   }: {
     allPostsData: {
       date: string
       title: string
       slug: string
-    }[]
+    }[];
+    totalWordCount: number;
   }) {
   // const title = [ siteTitle, name ];
   const namea = siteTitle;
@@ -54,6 +56,7 @@ export default function Home({
   }
 
   const totalPosts = allPostsData.length
+  // const totalWordCount = calculateWordCount();
 
   return (
     <Layout home>
@@ -92,7 +95,7 @@ export default function Home({
             </li>
           ))}
         </ul>
-        <div className={styles.info}><span>文章： {totalPosts}篇</span></div>
+        <div className={styles.info}><span>文章： {totalPosts}篇</span> - 全站共计 {totalWordCount} 字</div>
         {/* 
           <span>作者：</span>
           
@@ -113,11 +116,13 @@ export const getStaticProps: GetStaticProps = async () => {
         return {
           ...post,
           date: post.date.toString()
-        }
-      })
+        };
+      });
+      const totalWordCount = calculateWordCount();
     return {
       props: {
         allPostsData: formattedPosts,
+        totalWordCount,
       }
     }
 }

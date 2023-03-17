@@ -4,6 +4,7 @@ import NavBar from './NavBar';
 import React, { useEffect } from 'react'
 import prism from 'prismjs'
 
+
 export const name = 'FanMa';
 export const author = '黄胜丰';
 export const authorurl = 'https://fanmav.github.io';
@@ -11,7 +12,6 @@ export const enname = '使用 Next.js 的博客框架程序';
 export const siteTitle = 'FanMa 博客';
 export const desc = '这是一个 FanMa 的博客。';
 export const baseURL = 'https://fanmau.github.io';
-
 
 export default function Layout({
   children,
@@ -22,7 +22,9 @@ export default function Layout({
 }) {
   useEffect(() => {
     prism.highlightAll();
-}, []);
+  }, []);
+
+
   return (
     <div className='fanma'>
       <div className='maw'>
@@ -69,7 +71,7 @@ export default function Layout({
             <Link href="/">← Back to home</Link>
           </div>
         )}
-        <footer className='footer'>Copyright © 1985-2023 FanMa All Rights Reserved.</footer>
+        <footer className='footer'>Total words on this website: .<br />Copyright © 1985-2023 FanMa All Rights Reserved.</footer>
       </div>
     </div>
   )
