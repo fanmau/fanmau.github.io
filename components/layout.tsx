@@ -71,7 +71,7 @@ export default function Layout({
             <Link href="/">← Back to home</Link>
           </div>
         )}
-        <footer className='footer'>Total words on this website: .<br />Copyright © 1985-2023 FanMa All Rights Reserved.</footer>
+        <footer className='footer'>Copyright © 1985-2023 FanMa All Rights Reserved.</footer>
       </div>
     </div>
   )
