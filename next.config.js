@@ -2,7 +2,7 @@
 
 // const isProd = process.env.NODE_ENV === 'production'
 const nextConfig = {
-    trailingSlash: false,
+    trailingSlash: true,
     // router: { base: 'https://fanmau.github.io' },
     // assetPrefix: isProd ? 'https://fanmau.github.io' : undefined,
     // exportPathMap: async function (defaultPathMap) {

@@ -133,7 +133,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   // Generate paths for all pages
   const paths = [
-    // { params: { page: 'index.html' }}, // 将第1页设置为索引页
+    // { params: { page: '' }}, // 将第1页设置为索引页
     ...Array.from({ length: totalPages }, (_, i) => ({
       params: { page: (i === 0 ? 'index.html' : (i + 1).toString().concat('.html')) },
     }))
