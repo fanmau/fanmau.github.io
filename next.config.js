@@ -2,7 +2,7 @@
 
 // const isProd = process.env.NODE_ENV === 'production'
 const nextConfig = {
-    trailingSlash: true,
+    trailingSlash: false,
     // router: { base: 'https://fanmau.github.io' },
     // assetPrefix: isProd ? 'https://fanmau.github.io' : undefined,
     // exportPathMap: async function (defaultPathMap) {
@@ -15,11 +15,19 @@ const nextConfig = {
     //   return [
     //     {
     //       source: '/blog/',
-    //       destination: '/blog/index.html',
-    //       // permanent: true,
+    //       destination: '/posts/:slug',
+    //       permanent: true,
     //     },
     //   ]
     // },
+    async rewrites() {
+      return [
+        {
+          source: '/blog/',
+          destination: '/blog/index.html',
+        },
+      ];
+    },
   
   }
   
