@@ -85,7 +85,7 @@ export default function BlogPage({ posts, totalPages, currentPage, totalWordCoun
             if (pageNumber === currentPage) {
               return <strong key={i}>{pageNumber === 1 ? '首页' : pageNumber}</strong>;
             } else {
-              const href = pageNumber === 1 ? '/blog/index.html' : `/blog/${pageNumber}.html`;
+              const href = pageNumber === 1 ? '/blog/' : `/blog/${pageNumber}.html`;
               return (
                 <Link key={i} href={href}>
                   {pageNumber}
@@ -104,7 +104,7 @@ export default function BlogPage({ posts, totalPages, currentPage, totalWordCoun
     if (pageNumber === currentPage) {
       return <strong key={i}>{pageNumber === 1 ? '首页' : pageNumber}</strong>;
     } else {
-      const href = pageNumber === 1 ? '/blog/index.html' : `/blog/${pageNumber}.html`;
+      const href = pageNumber === 1 ? '/blog/' : `/blog/${pageNumber}.html`;
       return (
         <Link key={i} href={href}>
           {pageNumber}
@@ -135,7 +135,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = [
     // { params: { page: 'index.html' }}, // 将第1页设置为索引页
     ...Array.from({ length: totalPages }, (_, i) => ({
-      params: { page: (i === 0 ? 'index' : (i + 1).toString()).concat('.html') },
+      params: { page: (i === 0 ? 'index.html' : (i + 1).toString().concat('.html')) },
     }))
   ]
 
