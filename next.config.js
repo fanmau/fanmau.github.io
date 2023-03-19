@@ -11,15 +11,15 @@ const nextConfig = {
     //     ...defaultPathMap,
     //   }
     // },
-    async redirects() {
-      return [
-        {
-          source: '/blog/',
-          destination: '/blog/index.html',
-          // permanent: true,
-        },
-      ]
-    },
+    // async redirects() {
+    //   return [
+    //     {
+    //       source: '/blog/',
+    //       destination: '/blog/index.html',
+    //       // permanent: true,
+    //     },
+    //   ]
+    // },
   
   }
   
