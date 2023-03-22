@@ -26,6 +26,14 @@
     background: #ffffff;
 }
 
+.nav-list {
+    width: 100%;
+}
+
+.nav-list li{
+    display: inline-block;
+}
+
 .nav a{
     color: var(--color-main);
 }
@@ -66,6 +74,11 @@
     width: 2.8rem;
     fill: currentcolor;
 }
+
+.menu {
+    float: right;
+}
+
 .header {
     color: #ffffff;
     background: var(--color-bg-h);

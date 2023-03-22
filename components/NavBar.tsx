@@ -11,10 +11,17 @@ export default function NavBar() {
     return (
         <nav className='nav'>
             <ul className='nav-list'>
-                <Link href="/"><li className='logo'>
+                <li className='logo'>
+                    <Link href="/">
                     <div className='logo-fw'><div className='logo-f'><div className={sonsie.className}>F</div></div></div>
                     <div className='logo-link'>{name}</div>
-                </li></Link>
+                    </Link>
+                </li>
+                <li className='menu'>
+                    <Link href="/blog/">
+                        Blog
+                    </Link>
+                </li>
             </ul>
         </nav>
     )
