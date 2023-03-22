@@ -4,6 +4,8 @@ import { calculateWordCount, getSortedPostsData } from '@/lib/blog'
 import Layout, { name, siteTitle, desc, baseURL, author, authorurl } from '@/components/layout'
 import { buildTime } from '@/components/BuildTime'
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import React from 'react'
 
 interface Post {
   title: string
@@ -45,8 +47,18 @@ export default function BlogPage({ posts, totalPages, currentPage, totalWordCoun
   `,
     };
   }
-  const pageNumbers = [currentPage - 3, currentPage - 2, currentPage - 1, currentPage, currentPage + 1, currentPage + 2, currentPage + 3];
-  
+const pageNumbers = [
+  currentPage - 4 >= 1 ? 1 : null,
+  currentPage - 3 >= 1 ? currentPage - 3 : null,
+  currentPage - 2 >= 1 ? currentPage - 2 : null,
+  currentPage - 1 >= 1 ? currentPage - 1 : null,
+  currentPage,
+  currentPage + 1 <= totalPages ? currentPage + 1 : null,
+  currentPage + 2 <= totalPages ? currentPage + 2 : null,
+  currentPage + 3 <= totalPages ? currentPage + 3 : null,
+  currentPage + 4 <= totalPages ? totalPages : null,
+].filter((pageNumber) => pageNumber !== null);
+
   return (
     <Layout>
       <Head>
@@ -57,7 +69,7 @@ export default function BlogPage({ posts, totalPages, currentPage, totalWordCoun
         <meta property="og:site_name" content={name} />
         <meta property="og:title" content={siteTitle} />
         <meta property="og:locale" content="zh-CN" />
-        <meta property="og:url" content={baseURL} />
+        <meta property="og:url" content={`${baseURL}/blog/page-${currentPage}.html`} />
         <meta property="og:image" content={"https://fanmau.github.io/images/fanma.jpg"} />
         {/* <meta property="og:updated_time" content={date} /> */}
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -68,7 +80,7 @@ export default function BlogPage({ posts, totalPages, currentPage, totalWordCoun
         />
       </Head>
       <section>
-        <h1>Posts</h1>
+        <h1>文章列表页 - 第 {page} 页 （共 { totalPages } 页）</h1>
         <ul>
           {posts.map((post) => (
             <li key={post.slug}>
@@ -79,40 +91,43 @@ export default function BlogPage({ posts, totalPages, currentPage, totalWordCoun
             </li>
           ))}
         </ul>
-        <div>
-        {[1, ...Array.from({ length: totalPages - 1 }, (_, i) => i + 2)].map(
-          (pageNumber, i) => {
-            if (pageNumber === currentPage) {
-              return <strong key={i}>{pageNumber === 1 ? '首页' : pageNumber}</strong>;
-            } else {
-              const href = pageNumber === 1 ? '/blog/' : `/blog/${pageNumber}.html`;
-              return (
-                <Link key={i} href={href}>
-                  {pageNumber}
-                </Link>
-              );
-            }
-          }
-        )}
-        </div>
-        
-
 
 {pageNumbers
   .filter((pageNumber) => pageNumber > 0 && pageNumber <= totalPages)
-  .map((pageNumber, i) => {
+  .map((pageNumber, i, arr) => {
+    const isLastPage = pageNumber === totalPages;
     if (pageNumber === currentPage) {
-      return <strong key={i}>{pageNumber === 1 ? '首页' : pageNumber}</strong>;
+      return <strong key={i}>{pageNumber === 1 ? '首页' : (pageNumber === totalPages ? `${pageNumber} 最后一页` : pageNumber)}</strong>;
     } else {
-      const href = pageNumber === 1 ? '/blog/' : `/blog/${pageNumber}.html`;
-      return (
-        <Link key={i} href={href}>
-          {pageNumber}
-        </Link>
-      );
+      const href = pageNumber === 1 ? '/blog/' : `/blog/page-${pageNumber}.html`;
+      if (i > 0 && pageNumber - arr[i - 1] > 1) {
+        // 如果前一页与当前页不相连，则插入省略号
+        return (
+          <React.Fragment key={i}>
+            <span>...</span>
+            {isLastPage && (
+              <Link href={`/blog/page-${totalPages}.html`}>{totalPages}</Link>
+            )}
+          </React.Fragment>
+        );
+      } else if (isLastPage && i === arr.length - 1) {
+        // 如果是列表最后一项并且最后一页还未添加到页码列表，则添加最后一页链接
+        return (
+          <Link key={i} href={`/blog/page-${totalPages}.html`}>
+            {totalPages}
+          </Link>
+        );
+      } else {
+        return (
+          <Link key={i} href={href}>
+            {pageNumber}
+          </Link>
+        );
+      }
     }
-  })}
-        <div>{ totalPages }Current page: Current page: {page} {totalWordCount} </div>
+  })
+}
+        <div>当前页码：{page} ，网站字数：{totalWordCount} 字 </div>
       </section>
     </Layout>
   )
@@ -133,14 +148,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   // Generate paths for all pages
   const paths = [
-    // { params: { page: '' }}, // 将第1页设置为索引页
+    { params: { page: '' } },
     ...Array.from({ length: totalPages }, (_, i) => ({
-      params: { page: (i === 0 ? 'index.html' : (i + 1).toString().concat('.html')) },
-    }))
-  ]
+    params: { page: `page-${i + 1}.html` }
+  }))
+]
 
   return { paths, fallback: false }
 }
+
 
 export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
@@ -156,8 +172,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
 
   // 设置当前页数 currentPage
   let currentPage = 1
-  if (params?.page && params.page !== 'index.html') {
-    currentPage = parseInt(params.page as string)
+  if (params?.page && params.page !== '1') {
+    currentPage = parseInt(params.page.toString().replace('page-', ''))
   }
 
   const totalPosts = formattedPosts.length
@@ -165,11 +181,9 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
   const totalPages = Math.ceil(totalPosts / postsPerPage)
 
   // Get posts for the current page
-  const startIndex = (currentPage - 1) * postsPerPage;
-  const endIndex = startIndex + postsPerPage;
-  const posts = formattedPosts.slice(startIndex, endIndex)
-                               .map(post => ({ title: post.title, slug: post.slug }))
+  const startIndex = (currentPage - 1) * postsPerPage
+  const endIndex = startIndex + postsPerPage
+  const posts = formattedPosts.slice(startIndex, endIndex).map(post => ({ title: post.title, slug: post.slug }))
 
   return { props: { posts, totalPages, currentPage, totalWordCount } }
 }
-

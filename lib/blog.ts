@@ -4,7 +4,7 @@ import matter from 'gray-matter'
 import { remark } from 'remark'
 import html from 'remark-html'
 import remarkPrism from "remark-prism";
-import moment from 'moment-timezone'
+import slugify from 'slug'
 // const postsDirectory = path.join(process.cwd(), 'blog')
 
 
@@ -22,15 +22,25 @@ export function getAllPostIds() {
       const filenames = fs.readdirSync(directoryPath)
         .filter(filename => filename.endsWith('.md'))
 
-        
+        // return filenames.map(filename => {
+        //   const slug = [subdirectory, filename.replace(/\.md$/, '')];
+        //   const slugPath = slug.join('/');
+        //   const formattedSlug = slugify(slugPath, { lower: true, replacement: '/', remove: null });
+        //   return {
+        //     params: {
+        //       slug: formattedSlug + '.html'
+        //     }
+        //   }
+        // })  
   
       return filenames.map(filename => ({
         params: {
           slug: [subdirectory, filename.replace(/\.md$/, '').concat('.html')]
         }
       }))
+
     })
-  
+    console.log(paths)
     return paths
 }
 

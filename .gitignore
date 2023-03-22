@@ -45,6 +45,7 @@ jspm_packages/
 /public/robots.txt
 /public/sitemap*.xml
 /out
+/pages/fanma
 
 # TypeScript v1 declaration files
 typings/
