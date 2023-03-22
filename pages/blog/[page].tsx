@@ -148,8 +148,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   // Generate paths for all pages
   const paths = [
-    ...Array.from({ length: totalPages }, (_, i) => ({
-    params: { page: `page-${i + 1}.html` }
+    ...Array.from({ length: totalPages - 1 }, (_, i) => ({
+    params: { page: `page-${(i + 2).toString()}.html` }
   }))
 ]
 
