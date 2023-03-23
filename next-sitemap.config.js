@@ -15,6 +15,7 @@ module.exports = {
       priority = 0.9 // 修改为0.9
     } else if (path === '/blog') {
       console.log("Changing priority for", path);
+      path += '.html'
       priority = 0.8 // 新增一个链接设置优先级为0.9
     }
 

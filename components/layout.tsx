@@ -10,7 +10,7 @@ export const author = '黄胜丰';
 export const authorurl = 'https://fanmav.github.io';
 export const enname = '使用 Next.js 的博客框架程序';
 export const siteTitle = 'FanMa 博客';
-export const desc = '这是一个 FanMa 的博客。';
+export const desc = 'FanMa 博客 包含了关于前端学习的一系列内容，涵盖了 HTML、CSS、JavaScript、TypeScript、React、Next.js 等全栈方面的学习笔记。博客以技术为核心，深入浅出地讲解了这些技术的基础概念、实际应用以及最佳实践，并且结合了博主的个人经验和实践经历进行分享，有助于读者更好地理解和掌握这些技术。如果你有前端学习的需求或者对这些技术感兴趣，那么 FanMa 博客 将是帮助你实现这些目标的绝佳资源。';
 export const baseURL = 'https://fanmau.github.io';
 
 export default function Layout({

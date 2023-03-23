@@ -99,7 +99,7 @@ const pageNumbers = [
     if (pageNumber === currentPage) {
       return <strong key={i}>{pageNumber === 1 ? '首页' : (pageNumber === totalPages ? `${pageNumber} 最后一页` : pageNumber)}</strong>;
     } else {
-      const href = pageNumber === 1 ? '/blog/' : `/blog/page-${pageNumber}.html`;
+      const href = pageNumber === 1 ? '/blog.html' : `/blog/page-${pageNumber}.html`;
       if (i > 0 && pageNumber - arr[i - 1] > 1) {
         // 如果前一页与当前页不相连，则插入省略号
         return (
