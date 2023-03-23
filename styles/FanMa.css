@@ -84,7 +84,7 @@
     background: var(--color-bg-h);
     display: flex;
     justify-content: center;
-    padding: 3rem;
+    padding: 3rem 8rem;
 }
 
 .main {
