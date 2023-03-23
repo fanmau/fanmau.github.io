@@ -71,7 +71,7 @@ export default function Post({
         <h1 className='title'>{postData.title}<div className='title-date'><small><Date dateString={postData.date} /> - <span>约 {postData.wordCount} 字</span></small></div></h1>
         {/* <div>{postData.mtime}</div>
         <div>{postData.ctime}</div> */}
-        <div>{postData.slug}</div>
+        {/* <div>{postData.slug}</div> */}
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
     </Layout>

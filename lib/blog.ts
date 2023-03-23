@@ -35,12 +35,13 @@ export function getAllPostIds() {
   
       return filenames.map(filename => ({
         params: {
-          slug: [subdirectory, filename.replace(/\.md$/, '').concat('.html')]
+          slug: [subdirectory, filename.replace(/\.md$/, ".html")],
+          // filename: [subdirectory, filename.replace(/\.md$/, "")],
         }
       }))
 
     })
-    console.log(paths)
+    // console.log(paths)
     return paths
 }
 
