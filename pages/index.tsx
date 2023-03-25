@@ -85,7 +85,7 @@ export default function Home({
                 </h2>
             </div>
             <ul className={styles.list}>
-            {allPostsData.slice(10).map(({ slug, date, title }) => (
+            {allPostsData.slice(-10).map(({ slug, date, title }) => (
             <li key={slug}>
               <Link href={`/blog/${slug}`}>{title}</Link>
               <br />
