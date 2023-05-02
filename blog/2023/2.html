@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><link rel="icon" href="/favicon.ico"/><meta name="twitter:card" content="summary_large_image"/><title>如何为 Git 生成安全的 SSH 密钥和公钥 | FanMa</title><meta name="keywords" content="FanMa,博客,Next.js"/><meta property="og:type" content="website"/><meta property="og:site_name" content="FanMa"/><meta property="og:title" content="FanMa 博客"/><meta property="og:locale" content="zh-CN"/><meta property="og:url" content="https://fanmau.github.io"/><meta property="og:image" content="https://fanmav.github.io/images/fanma.jpg"/><meta name="viewport" content="width=device-width, initial-scale=1"/><script type="application/ld+json">{
+          "@context": "http://schema.org",
+          "@type": "Article",
+          "name": "FanMa",
+          "headline": "如何为 Git 生成安全的 SSH 密钥和公钥",
+          "author": {
+            "@type": "Person",
+            "name": "黄胜丰",
+            "url": "https://fanmav.github.io"
+          },
+          "datePublished": "2023-05-02T01:32:57.638Z",
+          "image": "",
+          "articleSection": "",
+          "url": "https://fanmav.github.io/blog/2023/2.html"
+        }
+    </script><meta name="next-head-count" content="13"/><link rel="preload" href="/_next/static/css/ecba3476100f022a.css" as="style"/><link rel="stylesheet" href="/_next/static/css/ecba3476100f022a.css" data-n-g=""/><link rel="preload" href="/_next/static/css/b35e07f0771a75a0.css" as="style"/><link rel="stylesheet" href="/_next/static/css/b35e07f0771a75a0.css" data-n-p=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-ee7e63bc15b31913.js" defer=""></script><script src="/_next/static/chunks/framework-ac88a2a245aea9ab.js" defer=""></script><script src="/_next/static/chunks/main-04721928ae71efe1.js" defer=""></script><script src="/_next/static/chunks/pages/_app-a5c337602b2b8174.js" defer=""></script><script src="/_next/static/chunks/765-f88be7b9869573be.js" defer=""></script><script src="/_next/static/chunks/338-0e0ca1e58a2e5276.js" defer=""></script><script src="/_next/static/chunks/681-c132199fb3549349.js" defer=""></script><script src="/_next/static/chunks/pages/blog/%5B...slug%5D-b307b68a4a74a460.js" defer=""></script><script src="/_next/static/G9tDxZSMHPW9bOXjOSX09/_buildManifest.js" defer=""></script><script src="/_next/static/G9tDxZSMHPW9bOXjOSX09/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div class="fanma"><div class="maw"><nav class="nav"><ul class="nav-list"><li class="logo"><a href="/"><div class="logo-fw"><div class="logo-f"><div class="__className_2bdad4">F</div></div></div><div class="logo-link">FanMa</div></a></li><li class="menu"><a href="/blog.html">Blog</a></li></ul></nav><header class="header"><div class="works"><p>FanMa 博客 包含了关于前端学习的一系列内容，涵盖了 HTML、CSS、JavaScript、TypeScript、React、Next.js 等全栈方面的学习笔记。博客以技术为核心，深入浅出地讲解了这些技术的基础概念、实际应用以及最佳实践，并且结合了博主的个人经验和实践经历进行分享，有助于读者更好地理解和掌握这些技术。如果你有前端学习的需求或者对这些技术感兴趣，那么 FanMa 博客 将是帮助你实现这些目标的绝佳资源。</p></div></header><main class="main"><div class="book"><article><h1 class="title">如何为 Git 生成安全的 SSH 密钥和公钥<div class="title-date"><small><time dateTime="2023-03-15">2023年03月15日</time> - <span>约 <!-- -->1026<!-- --> 字</span></small></div></h1><div><p>我们把 Git 安装好后，还要生成SSH密钥和公钥才可以正常使用。下面就是 Git生成SSH密钥和公钥 的一些详细步骤，以及在 Github 上的相关配置方法。</p>
+<h2>1、Git初步配置</h2>
+<p>1.1、第一步要做的就是打开 Git 窗口程序，你可以选择一个空文件夹，或者新建一个文件夹。在这个文件夹空白的地方点击右键，然后选择并点击 Git Bash Here 就可以打开 Git 窗口程序了，注意不要点错哦。</p>
+<p>1.2、在 Git 窗口输入你的用户名和邮箱。</p>
+<div class="remark-highlight"><pre class="language-git"><code class="language-git">git config --global user.name fanmaue
+git config --global user.email fanmaeu@outlook.com
+</code></pre></div>
+<h2>2、生成密钥公钥</h2>
+<p>2.1、输入 <code>ssh-keygen -t rsa -C fanmaeu@outlook.com</code> 生成 SSH 密钥和公钥。</p>
+<div class="remark-highlight"><pre class="language-git"><code class="language-git">ssh-keygen -t rsa -C fanmaeu@outlook.com
+</code></pre></div>
+<div class="remark-highlight"><pre class="language-git"><code class="language-git">Generating public/private rsa key pair.
+Enter file in which to save the key (/c/Users/FanMa/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/FanMa/.ssh/id_rsa
+Your public key has been saved in /c/Users/FanMa/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:+9AxMoNE1584848484848Pz3UtmrSn4e28M fanmaeu@outlook.com
+The key's randomart image is:
+<span class="token inserted">+---[RSA 3072]----+</span>
+| . 村     辰 .   |
+| o.  .  ..o + o o|
+| ... ...   .4844+|
+|  . ....      *.B|
+|     498489  o o+|
+|        48484 ...|
+|        svsvv.o. |
+|         oo  o+E |
+|          .o+o ..|
+<span class="token inserted">+----[SHA256]-----+</span>
+</code></pre></div>
+<p>在 Git生成SSH密钥和公钥 的过程中出现一些提示，你一直按回车键就可以了，最后出现上面的画面就代表Git的SSH密钥和公钥都已经生成好了。</p>
+<h2>3、查看密钥公钥</h2>
+<p>3.1、输入 Git 命令 cat ~/.ssh/id_rsa.pub 并按回车键就可以直接查看公钥了。</p>
+<div class="remark-highlight"><pre class="language-git"><code class="language-git">cat ~/.ssh/id_rsa.pub
+</code></pre></div>
+<div class="remark-highlight"><pre class="language-git"><code class="language-git">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCQJ9GaIrhfZWZ6Stt6y9Z5Du1vT7CkFZiXB6hWTQbxZjlehfrfksKDB6szyjPJQNgQG80hyoBoRCdhkSYtmgT7AmbKE0T8CL34e91rDGraNIb4um5FlXnH5l7fXBQz6+qYrYnP49hXRjsE4og9ltUmxCwpY6HQc1e11Tm+pQIZM+dRCNAT4XTUFDmAViT941OeFEqoqbBF3ZYS92V9lOxdxpXtHQVsFH89kI9RIuzzZYVDgB8lmZ5LuuPqmLcHd8Yf5hii8vrII7o2kzis703OQhA+RwM5oAAGgnNmYEOcAON2OOj2VS9/L00Oh53gig8oq1X/hqVTcimbednplBNhB3bGn4gaua5fWwd/W6WrgrjQQma8ocUvHixEW7YfZukzYSywRwTU29l4u3OMmHbhs/a5TVJ1K2135ixxVT9Kx1C9xJU= helle@fanma.eu.org
+</code></pre></div>
+<p>3.2、输入 Git 命令 cat ~/.ssh/id_rsa 并按回车键就可以直接查看密钥了。</p>
+<div class="remark-highlight"><pre class="language-git"><code class="language-git">cat ~/.ssh/id_rsa
+</code></pre></div>
+<div class="remark-highlight"><pre class="language-git"><code class="language-git"><span class="token deleted">-----BEGIN OPENSSH PRIVATE KEY-----</span>
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
+CgwerM8ozyUDYEBvNIcqAaEQnYZEmLZoE+wJmyhNE/Ai9+Hvdawxq2jSG+LpuRZV5x+Ze3
+1wUM+vqmK2Jz+PYV0Y7BOKIPZbVJsQsKWOh0HNXtdU5vqUCGTPnUQjQE+F01BQ5gFYk/eN
+TnhftUCAjh35b2fpfXw0btFcx2RNogC0vGzIpIJO07fGsRhwTv+W6nvwzQ4GxYNXLjJoOp
+PZ5mcJTaBN2trJAayEbLkSY+9iUuoqjqJbxqpiPlIshYIv+Inw0n+PxJBz2F5BB/kHWnM7
+e+HdXV3kkR6HjSVmmiBA8quvSUBgrPQE0TzOnFritCuKUpLS3Stfcrcgc+35nXG35aWjvn
+I815VZpGPgVjD69mmJjFhw3OxHQBepE6qIHFp/NjaEwDngiVh2LZztF6pw+u1cNJ47b9qM
+F1SJC5BHh7XOB5b/o+h8Rw3R8RlLA8XwAAAMEAzWihVU2xF59x8Zme2Frah/wlHQmGFyJn
+EAq/jiTW2MmxyR/m4LVjLnER52SJeTYM6BT7QsPW2POHfzIK6VIGy1l5NyM6owzTnNzPym
+8iOCz3CYszsxth2rWIBaiPifxqLd3K9eN0Fgbn+H36+L2/k+Zn3RD7/yTFaQFivGnULmQV
+IABfDaO182tCOLAAAAE2Zhbm1hZXVAb3V0bG9vay5jb20BAgMEBQYH
+<span class="token deleted">-----END OPENSSH PRIVATE KEY-----</span>
+</code></pre></div>
+<p>3.3、查看SSH密钥和公钥方法二</p>
+<p>如果你是 Windows 系统的用户，直接可以进入 C盘 的 C:\Users\FanMa.ssh 目录下（FanMa为你的系统用户名称）。</p>
+<p>在这个目录有两个文件</p>
+<div class="remark-highlight"><pre class="language-FanMa"><code class="language-FanMa">id_rsa
+id_rsa.pub</code></pre></div>
+<p>其中 id_rsa 是密钥，另外 id_rsa.pub 就是密钥，你可以使用任何编辑器来打开并查看它们。</p>
+<h2>4、Github SSH key 设置</h2>
+<p>4.1、打开 Github 官网并登录上去，点击你的 头像 然后选择下面的 settings 链接。找到左边栏的 SSH and GPG keys 并点击它。然后你就可以看到有 SSH keys 的相关信息，这时候我个点击 SSH keys 右边的 New SSH key 按钮。</p>
+<p>4.2、在 Title 输入框里你可以根据自己的喜好取个名称，在 Key 下面的大输入框里填写刚才我们生成的公钥。</p>
+<p>注意是填写公钥，不是密钥！</p>
+<p>就是填写入以 ssh-rsa  开头，邮箱结尾的就是公钥。</p>
+<h2>5、配置完成</h2>
+<p>验证 SSH Keys 是否连接成功。</p>
+<p>在命令窗口输入 <code>ssh -T git@github.com</code> 进行验证。</p>
+<div class="remark-highlight"><pre class="language-git"><code class="language-git">ssh -T git@github.com
+</code></pre></div>
+<p>连接成功返回信息如下：</p>
+<div class="remark-highlight"><pre class="language-ssh"><code class="language-ssh">Hi fanmaue! You&#x26;#39;ve successfully authenticated, but GitHub does not provide shell access.</code></pre></div>
+<p>现出上面的返回信息就说明已经连接成功了，现在就可以正常的和 Github 之间相互传送信息了。</p>
+</div></article></div></main><div class="back"><a href="/">← Back to home</a></div><footer class="footer">Copyright © 1985-2023 FanMa All Rights Reserved.</footer></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postData":{"birthtime":"2023-05-02T01:32:57.638Z","mtime":"2023-05-02T01:32:57.638Z","slug":"2023/2","wordCount":1026,"contentHtml":"\u003cp\u003e我们把 Git 安装好后，还要生成SSH密钥和公钥才可以正常使用。下面就是 Git生成SSH密钥和公钥 的一些详细步骤，以及在 Github 上的相关配置方法。\u003c/p\u003e\n\u003ch2\u003e1、Git初步配置\u003c/h2\u003e\n\u003cp\u003e1.1、第一步要做的就是打开 Git 窗口程序，你可以选择一个空文件夹，或者新建一个文件夹。在这个文件夹空白的地方点击右键，然后选择并点击 Git Bash Here 就可以打开 Git 窗口程序了，注意不要点错哦。\u003c/p\u003e\n\u003cp\u003e1.2、在 Git 窗口输入你的用户名和邮箱。\u003c/p\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-git\"\u003e\u003ccode class=\"language-git\"\u003egit config --global user.name fanmaue\ngit config --global user.email fanmaeu@outlook.com\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003ch2\u003e2、生成密钥公钥\u003c/h2\u003e\n\u003cp\u003e2.1、输入 \u003ccode\u003essh-keygen -t rsa -C fanmaeu@outlook.com\u003c/code\u003e 生成 SSH 密钥和公钥。\u003c/p\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-git\"\u003e\u003ccode class=\"language-git\"\u003essh-keygen -t rsa -C fanmaeu@outlook.com\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-git\"\u003e\u003ccode class=\"language-git\"\u003eGenerating public/private rsa key pair.\nEnter file in which to save the key (/c/Users/FanMa/.ssh/id_rsa):\nEnter passphrase (empty for no passphrase):\nEnter same passphrase again:\nYour identification has been saved in /c/Users/FanMa/.ssh/id_rsa\nYour public key has been saved in /c/Users/FanMa/.ssh/id_rsa.pub\nThe key fingerprint is:\nSHA256:+9AxMoNE1584848484848Pz3UtmrSn4e28M fanmaeu@outlook.com\nThe key's randomart image is:\n\u003cspan class=\"token inserted\"\u003e+---[RSA 3072]----+\u003c/span\u003e\n| . 村     辰 .   |\n| o.  .  ..o + o o|\n| ... ...   .4844+|\n|  . ....      *.B|\n|     498489  o o+|\n|        48484 ...|\n|        svsvv.o. |\n|         oo  o+E |\n|          .o+o ..|\n\u003cspan class=\"token inserted\"\u003e+----[SHA256]-----+\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp\u003e在 Git生成SSH密钥和公钥 的过程中出现一些提示，你一直按回车键就可以了，最后出现上面的画面就代表Git的SSH密钥和公钥都已经生成好了。\u003c/p\u003e\n\u003ch2\u003e3、查看密钥公钥\u003c/h2\u003e\n\u003cp\u003e3.1、输入 Git 命令 cat ~/.ssh/id_rsa.pub 并按回车键就可以直接查看公钥了。\u003c/p\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-git\"\u003e\u003ccode class=\"language-git\"\u003ecat ~/.ssh/id_rsa.pub\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-git\"\u003e\u003ccode class=\"language-git\"\u003essh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDCQJ9GaIrhfZWZ6Stt6y9Z5Du1vT7CkFZiXB6hWTQbxZjlehfrfksKDB6szyjPJQNgQG80hyoBoRCdhkSYtmgT7AmbKE0T8CL34e91rDGraNIb4um5FlXnH5l7fXBQz6+qYrYnP49hXRjsE4og9ltUmxCwpY6HQc1e11Tm+pQIZM+dRCNAT4XTUFDmAViT941OeFEqoqbBF3ZYS92V9lOxdxpXtHQVsFH89kI9RIuzzZYVDgB8lmZ5LuuPqmLcHd8Yf5hii8vrII7o2kzis703OQhA+RwM5oAAGgnNmYEOcAON2OOj2VS9/L00Oh53gig8oq1X/hqVTcimbednplBNhB3bGn4gaua5fWwd/W6WrgrjQQma8ocUvHixEW7YfZukzYSywRwTU29l4u3OMmHbhs/a5TVJ1K2135ixxVT9Kx1C9xJU= helle@fanma.eu.org\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp\u003e3.2、输入 Git 命令 cat ~/.ssh/id_rsa 并按回车键就可以直接查看密钥了。\u003c/p\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-git\"\u003e\u003ccode class=\"language-git\"\u003ecat ~/.ssh/id_rsa\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-git\"\u003e\u003ccode class=\"language-git\"\u003e\u003cspan class=\"token deleted\"\u003e-----BEGIN OPENSSH PRIVATE KEY-----\u003c/span\u003e\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn\nCgwerM8ozyUDYEBvNIcqAaEQnYZEmLZoE+wJmyhNE/Ai9+Hvdawxq2jSG+LpuRZV5x+Ze3\n1wUM+vqmK2Jz+PYV0Y7BOKIPZbVJsQsKWOh0HNXtdU5vqUCGTPnUQjQE+F01BQ5gFYk/eN\nTnhftUCAjh35b2fpfXw0btFcx2RNogC0vGzIpIJO07fGsRhwTv+W6nvwzQ4GxYNXLjJoOp\nPZ5mcJTaBN2trJAayEbLkSY+9iUuoqjqJbxqpiPlIshYIv+Inw0n+PxJBz2F5BB/kHWnM7\ne+HdXV3kkR6HjSVmmiBA8quvSUBgrPQE0TzOnFritCuKUpLS3Stfcrcgc+35nXG35aWjvn\nI815VZpGPgVjD69mmJjFhw3OxHQBepE6qIHFp/NjaEwDngiVh2LZztF6pw+u1cNJ47b9qM\nF1SJC5BHh7XOB5b/o+h8Rw3R8RlLA8XwAAAMEAzWihVU2xF59x8Zme2Frah/wlHQmGFyJn\nEAq/jiTW2MmxyR/m4LVjLnER52SJeTYM6BT7QsPW2POHfzIK6VIGy1l5NyM6owzTnNzPym\n8iOCz3CYszsxth2rWIBaiPifxqLd3K9eN0Fgbn+H36+L2/k+Zn3RD7/yTFaQFivGnULmQV\nIABfDaO182tCOLAAAAE2Zhbm1hZXVAb3V0bG9vay5jb20BAgMEBQYH\n\u003cspan class=\"token deleted\"\u003e-----END OPENSSH PRIVATE KEY-----\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp\u003e3.3、查看SSH密钥和公钥方法二\u003c/p\u003e\n\u003cp\u003e如果你是 Windows 系统的用户，直接可以进入 C盘 的 C:\\Users\\FanMa.ssh 目录下（FanMa为你的系统用户名称）。\u003c/p\u003e\n\u003cp\u003e在这个目录有两个文件\u003c/p\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-FanMa\"\u003e\u003ccode class=\"language-FanMa\"\u003eid_rsa\nid_rsa.pub\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp\u003e其中 id_rsa 是密钥，另外 id_rsa.pub 就是密钥，你可以使用任何编辑器来打开并查看它们。\u003c/p\u003e\n\u003ch2\u003e4、Github SSH key 设置\u003c/h2\u003e\n\u003cp\u003e4.1、打开 Github 官网并登录上去，点击你的 头像 然后选择下面的 settings 链接。找到左边栏的 SSH and GPG keys 并点击它。然后你就可以看到有 SSH keys 的相关信息，这时候我个点击 SSH keys 右边的 New SSH key 按钮。\u003c/p\u003e\n\u003cp\u003e4.2、在 Title 输入框里你可以根据自己的喜好取个名称，在 Key 下面的大输入框里填写刚才我们生成的公钥。\u003c/p\u003e\n\u003cp\u003e注意是填写公钥，不是密钥！\u003c/p\u003e\n\u003cp\u003e就是填写入以 ssh-rsa  开头，邮箱结尾的就是公钥。\u003c/p\u003e\n\u003ch2\u003e5、配置完成\u003c/h2\u003e\n\u003cp\u003e验证 SSH Keys 是否连接成功。\u003c/p\u003e\n\u003cp\u003e在命令窗口输入 \u003ccode\u003essh -T git@github.com\u003c/code\u003e 进行验证。\u003c/p\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-git\"\u003e\u003ccode class=\"language-git\"\u003essh -T git@github.com\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp\u003e连接成功返回信息如下：\u003c/p\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-ssh\"\u003e\u003ccode class=\"language-ssh\"\u003eHi fanmaue! You\u0026#x26;#39;ve successfully authenticated, but GitHub does not provide shell access.\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp\u003e现出上面的返回信息就说明已经连接成功了，现在就可以正常的和 Github 之间相互传送信息了。\u003c/p\u003e\n","title":"如何为 Git 生成安全的 SSH 密钥和公钥","date":"2023-03-15","author":[{"name":"黄胜丰","url":"https://fanma.eu.org"},{"name":"FanMa","url":"https://fanmaue.github.io"}],"category":"Github","tag":["Git","密钥","公钥"],"head":[["meta",{"name":"keywords","content":"Git,密钥,公钥"}]],"order":1,"star":1}},"__N_SSG":true},"page":"/blog/[...slug]","query":{"slug":["2023","2.html"]},"buildId":"G9tDxZSMHPW9bOXjOSX09","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

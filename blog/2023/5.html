@@ -1,0 +1,130 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charSet="utf-8"/><link rel="icon" href="/favicon.ico"/><meta name="twitter:card" content="summary_large_image"/><title>使用 Next.js 自动将应用部署到 GitHub Pages | FanMa</title><meta name="keywords" content="FanMa,博客,Next.js"/><meta property="og:type" content="website"/><meta property="og:site_name" content="FanMa"/><meta property="og:title" content="FanMa 博客"/><meta property="og:locale" content="zh-CN"/><meta property="og:url" content="https://fanmau.github.io"/><meta property="og:image" content="https://fanmav.github.io/images/fanma.jpg"/><meta name="viewport" content="width=device-width, initial-scale=1"/><script type="application/ld+json">{
+          "@context": "http://schema.org",
+          "@type": "Article",
+          "name": "FanMa",
+          "headline": "使用 Next.js 自动将应用部署到 GitHub Pages",
+          "author": {
+            "@type": "Person",
+            "name": "黄胜丰",
+            "url": "https://fanmav.github.io"
+          },
+          "datePublished": "2023-05-02T01:32:57.638Z",
+          "image": "",
+          "articleSection": "",
+          "url": "https://fanmav.github.io/blog/2023/5.html"
+        }
+    </script><meta name="next-head-count" content="13"/><link rel="preload" href="/_next/static/css/ecba3476100f022a.css" as="style"/><link rel="stylesheet" href="/_next/static/css/ecba3476100f022a.css" data-n-g=""/><link rel="preload" href="/_next/static/css/b35e07f0771a75a0.css" as="style"/><link rel="stylesheet" href="/_next/static/css/b35e07f0771a75a0.css" data-n-p=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-ee7e63bc15b31913.js" defer=""></script><script src="/_next/static/chunks/framework-ac88a2a245aea9ab.js" defer=""></script><script src="/_next/static/chunks/main-04721928ae71efe1.js" defer=""></script><script src="/_next/static/chunks/pages/_app-a5c337602b2b8174.js" defer=""></script><script src="/_next/static/chunks/765-f88be7b9869573be.js" defer=""></script><script src="/_next/static/chunks/338-0e0ca1e58a2e5276.js" defer=""></script><script src="/_next/static/chunks/681-c132199fb3549349.js" defer=""></script><script src="/_next/static/chunks/pages/blog/%5B...slug%5D-b307b68a4a74a460.js" defer=""></script><script src="/_next/static/G9tDxZSMHPW9bOXjOSX09/_buildManifest.js" defer=""></script><script src="/_next/static/G9tDxZSMHPW9bOXjOSX09/_ssgManifest.js" defer=""></script></head><body><div id="__next"><div class="fanma"><div class="maw"><nav class="nav"><ul class="nav-list"><li class="logo"><a href="/"><div class="logo-fw"><div class="logo-f"><div class="__className_2bdad4">F</div></div></div><div class="logo-link">FanMa</div></a></li><li class="menu"><a href="/blog.html">Blog</a></li></ul></nav><header class="header"><div class="works"><p>FanMa 博客 包含了关于前端学习的一系列内容，涵盖了 HTML、CSS、JavaScript、TypeScript、React、Next.js 等全栈方面的学习笔记。博客以技术为核心，深入浅出地讲解了这些技术的基础概念、实际应用以及最佳实践，并且结合了博主的个人经验和实践经历进行分享，有助于读者更好地理解和掌握这些技术。如果你有前端学习的需求或者对这些技术感兴趣，那么 FanMa 博客 将是帮助你实现这些目标的绝佳资源。</p></div></header><main class="main"><div class="book"><article><h1 class="title">使用 Next.js 自动将应用部署到 GitHub Pages<div class="title-date"><small><time dateTime="2023-03-16">2023年03月16日</time> - <span>约 <!-- -->1578<!-- --> 字</span></small></div></h1><div><p>我们把 Next.js 网站搭建好后，就可以把网站内容部署到网络上的静态空间了。在这里我选择的平台是 GitHub Pages 为我的网站进行托管，使用 GitHub Pages 的好处就不需要我多说了。</p>
+<h2>自动部署的好处</h2>
+<p>如果我们的 Next.js 项目不进行配置自动部署，那么我们每次写一篇文章，发布一篇文章的时候，就需要重新打包生成静态页。要知道 Next.js 打包生成静态页的时候是比较花时间的，我刚开始搭建 Next.js 项目的时候，网站上没几篇文章，打包的时候也需要花费一段时间。</p>
+<p>在一个群里其中有一个群友，他有一个 Vuepress 项目，里面有 3100多 部法律法规的文章，包含 1600多 万字。根据他的描述，他打包花费了差不多一天的时间，大概是23个小时。</p>
+<p>可见我们给 Next.js 项目配置自动部署是多么的方便，它可以给我们省很多时间，一年换算下来是一个非常可观的一个数字。下面我就把 用 Next.js 自动将应用部署到 GitHub Pages 的成功案例分享给大家，希望可以对您有所帮助。</p>
+<h2>准备部署</h2>
+<p>在部署前要先了解一些基本的信息：</p>
+<ul>
+<li>1、默认情况下 Markdown 源文件是在你项目的 blog 目录里的；</li>
+<li>2、默认情况下 Next.js 网站打包生成的静态页文件会放在 out 目录里；</li>
+<li>3、Next.js 推荐使用 npm 作为包管理器，当然也可以使用 npm 或 yarn ；</li>
+<li>4、Next.js 作为项目依赖安装，并在 package.json 是配置了如下脚本： ；</li>
+</ul>
+<div class="remark-highlight"><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"scripts"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+    <span class="token property">"build"</span><span class="token operator">:</span> <span class="token string">"next build &#x26;&#x26; next export"</span><span class="token punctuation">,</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div>
+<p>在我的 package.json 文件里，我根据自己的情况对默认的配置进行了一点修改，我把默认的  <code>"build": "next build"</code> 改成了 <code>"build": "next build &#x26;&#x26; next export"</code> ，需要打包的时候可以直接用 <code>npm run build</code> 命令就可以打包了。你也可以根据自己的实际情况进行修改，当然了也可以不需要修改，直接使用默认的就好了。</p>
+<p>修改信息</p>
+<ul>
+<li>
+<ul>
+<li>4.1、可以把 <code>npm run build</code> 你想要的任何命令，这里随便你怎么改。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>4.2、<code>next build</code> 是 Next.js 提供的一个命令行工具，用于将 Next.js 应用程序构建为静态 HTML 文件和 JavaScript 文件的集合，以便在生产环境中进行部署。它会将应用程序的所有页面预渲染为静态 HTML 文件，以提高性能和搜索引擎优化。构建后的文件将存储在 <code>.next</code> 目录中。</li>
+</ul>
+</li>
+<li>
+<ul>
+<li>4.3、<code>next export</code> 是 Next.js 的一个命令，用于将 Next.js 应用程序导出为静态 HTML 文件。导出的静态文件存放在项目根目录的 out 文件夹里。</li>
+</ul>
+</li>
+<li>
+<p>5、在 GitHub Pages 上配置好仓库的相关设置，需要新建一个新分支用来存放静态页。</p>
+</li>
+</ul>
+<h2>仓库配置</h2>
+<p>1、在 GitHub 新建一个仓库（已经建有仓库的可以省略这一步骤），建立仓库后会自动生成一个名为 main 的默认主分支。这个分支我们用来存放 Next.js 项目的源码文件，包括我们的 md 文件也在里面。</p>
+<p>2、在这个仓库里再新建一个分支，我建立了一个名为 fanma 的分支。分支名你可以随便取，这个没什么要求。</p>
+<p>这样我们的 GitHub 仓库里就有了两个分支，其中 main 默认主分支用来存放项目的所有源码文件。另外一个分支 fanma 用下存放静态文件，也就是用来运行网站的文件。</p>
+<p>这样我们的仓库配置就基本完成了。</p>
+<h2>自动部署</h2>
+<p>在 GitHub Pages 托管平台上，我使用的是 GitHub Actions 来为 Next.js 项目搭建的网站来进行自动部署。</p>
+<p>1、在仓库默认主分支 main 根目录创建一个名为 .github 的文件夹，在 .github 文件夹里再创建一个 workflows 工作流文件夹，继续再这个 workflows 新建一个 fanma.yml 的文件。</p>
+<p>最终的文件路径为 .github/workflows/fanma.yml 完整的路径。</p>
+<p>其中 fanma.yml 的文件名是可以随便取的，只要 .yml 文件后缀不变就可以了。</p>
+<p>2、工作流文件 fanma.yml 配置如下：</p>
+<div class="remark-highlight"><pre class="language-yml"><code class="language-yml"><span class="token key atrule">name</span><span class="token punctuation">:</span> fanma
+
+<span class="token key atrule">on</span><span class="token punctuation">:</span> 
+  <span class="token key atrule">push</span><span class="token punctuation">:</span>
+    <span class="token key atrule">branches</span><span class="token punctuation">:</span> <span class="token punctuation">[</span>main<span class="token punctuation">]</span>
+  <span class="token key atrule">workflow_dispatch</span><span class="token punctuation">:</span>
+
+<span class="token key atrule">jobs</span><span class="token punctuation">:</span>
+  <span class="token key atrule">docs</span><span class="token punctuation">:</span>
+    <span class="token key atrule">runs-on</span><span class="token punctuation">:</span> ubuntu<span class="token punctuation">-</span>latest
+
+    <span class="token key atrule">steps</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/checkout@v3
+        <span class="token key atrule">with</span><span class="token punctuation">:</span>
+          <span class="token comment"># “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录</span>
+          <span class="token key atrule">fetch-depth</span><span class="token punctuation">:</span> <span class="token number">0</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Setup pnpm
+        <span class="token key atrule">uses</span><span class="token punctuation">:</span> pnpm/action<span class="token punctuation">-</span>setup@v2
+        <span class="token key atrule">with</span><span class="token punctuation">:</span>
+          <span class="token comment"># 选择要使用的 pnpm 版本</span>
+          <span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token number">7</span>
+          <span class="token comment"># 使用 pnpm 安装依赖</span>
+          <span class="token key atrule">run_install</span><span class="token punctuation">:</span> <span class="token boolean important">true</span>
+
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Setup Node.js
+        <span class="token key atrule">uses</span><span class="token punctuation">:</span> actions/setup<span class="token punctuation">-</span>node@v3
+        <span class="token key atrule">with</span><span class="token punctuation">:</span>
+          <span class="token comment"># 选择要使用的 node 版本</span>
+          <span class="token key atrule">node-version</span><span class="token punctuation">:</span> <span class="token number">18</span>
+          <span class="token comment"># 缓存 pnpm 依赖</span>
+          <span class="token key atrule">cache</span><span class="token punctuation">:</span> pnpm
+
+      <span class="token comment"># 运行构建脚本</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Build Next.js site
+        <span class="token key atrule">run</span><span class="token punctuation">:</span> npm run build
+
+      <span class="token comment"># 查看 workflow 的文档来获取更多信息</span>
+      <span class="token comment"># @see https://github.com/crazy-max/ghaction-github-pages</span>
+      <span class="token punctuation">-</span> <span class="token key atrule">name</span><span class="token punctuation">:</span> Deploy to GitHub Pages
+        <span class="token key atrule">uses</span><span class="token punctuation">:</span> crazy<span class="token punctuation">-</span>max/ghaction<span class="token punctuation">-</span>github<span class="token punctuation">-</span>pages@v2
+        <span class="token key atrule">with</span><span class="token punctuation">:</span>
+          <span class="token comment"># 部署到 gh-pages 分支</span>
+          <span class="token key atrule">target_branch</span><span class="token punctuation">:</span> fanma
+          <span class="token comment"># 部署目录为 VuePress 的默认输出目录</span>
+          <span class="token key atrule">build_dir</span><span class="token punctuation">:</span> out
+        <span class="token key atrule">env</span><span class="token punctuation">:</span>
+          <span class="token comment"># @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret</span>
+          <span class="token key atrule">GITHUB_TOKEN</span><span class="token punctuation">:</span> $<span class="token punctuation">{</span><span class="token punctuation">{</span> secrets.GITHUB_TOKEN <span class="token punctuation">}</span><span class="token punctuation">}</span>
+</code></pre></div>
+<p>上面就是我的工作流文件 fanma.yml 相关配置信息，现在已经是正常运行的，没有问题的。</p>
+<p>下面这三个配置，需要根据你自己的实际情况进行配置：</p>
+<div class="remark-highlight"><pre class="language-yml"><code class="language-yml"><span class="token key atrule">run</span><span class="token punctuation">:</span> npm run build
+<span class="token key atrule">target_branch</span><span class="token punctuation">:</span> fanma
+<span class="token key atrule">build_dir</span><span class="token punctuation">:</span> out
+</code></pre></div>
+<h2>自动部署完成</h2>
+<p>到这里我们 Next.js 项目的自动部署就完成了，只要我们在本地新建文件或修改文件，进行 Push 就可以触发自动部署。</p>
+<p>现在我们就不需要在本地进行打包生成静态页了，只要把 md 文件写好，打包生成静态页就 Push 就交给 GitHub Actions 帮我们自动部署就可以了。</p>
+<h2>错误解决方案</h2>
+<p>在配置自动部署中会遇到一些问题，下面的一些错误解决应该可以帮助得到你。</p>
+<p>设置 GitHub Pages 工作流权限：
+<a href="/blog/2023/4.html">Error The process '/usr/bin/git' failed with exit code 128</a></p>
+</div></article></div></main><div class="back"><a href="/">← Back to home</a></div><footer class="footer">Copyright © 1985-2023 FanMa All Rights Reserved.</footer></div></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postData":{"birthtime":"2023-05-02T01:32:57.638Z","mtime":"2023-05-02T01:32:57.638Z","slug":"2023/5","wordCount":1578,"contentHtml":"\u003cp\u003e我们把 Next.js 网站搭建好后，就可以把网站内容部署到网络上的静态空间了。在这里我选择的平台是 GitHub Pages 为我的网站进行托管，使用 GitHub Pages 的好处就不需要我多说了。\u003c/p\u003e\n\u003ch2\u003e自动部署的好处\u003c/h2\u003e\n\u003cp\u003e如果我们的 Next.js 项目不进行配置自动部署，那么我们每次写一篇文章，发布一篇文章的时候，就需要重新打包生成静态页。要知道 Next.js 打包生成静态页的时候是比较花时间的，我刚开始搭建 Next.js 项目的时候，网站上没几篇文章，打包的时候也需要花费一段时间。\u003c/p\u003e\n\u003cp\u003e在一个群里其中有一个群友，他有一个 Vuepress 项目，里面有 3100多 部法律法规的文章，包含 1600多 万字。根据他的描述，他打包花费了差不多一天的时间，大概是23个小时。\u003c/p\u003e\n\u003cp\u003e可见我们给 Next.js 项目配置自动部署是多么的方便，它可以给我们省很多时间，一年换算下来是一个非常可观的一个数字。下面我就把 用 Next.js 自动将应用部署到 GitHub Pages 的成功案例分享给大家，希望可以对您有所帮助。\u003c/p\u003e\n\u003ch2\u003e准备部署\u003c/h2\u003e\n\u003cp\u003e在部署前要先了解一些基本的信息：\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e1、默认情况下 Markdown 源文件是在你项目的 blog 目录里的；\u003c/li\u003e\n\u003cli\u003e2、默认情况下 Next.js 网站打包生成的静态页文件会放在 out 目录里；\u003c/li\u003e\n\u003cli\u003e3、Next.js 推荐使用 npm 作为包管理器，当然也可以使用 npm 或 yarn ；\u003c/li\u003e\n\u003cli\u003e4、Next.js 作为项目依赖安装，并在 package.json 是配置了如下脚本： ；\u003c/li\u003e\n\u003c/ul\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-json\"\u003e\u003ccode class=\"language-json\"\u003e\u003cspan class=\"token punctuation\"\u003e{\u003c/span\u003e\n  \u003cspan class=\"token property\"\u003e\"scripts\"\u003c/span\u003e\u003cspan class=\"token operator\"\u003e:\u003c/span\u003e \u003cspan class=\"token punctuation\"\u003e{\u003c/span\u003e\n    \u003cspan class=\"token property\"\u003e\"build\"\u003c/span\u003e\u003cspan class=\"token operator\"\u003e:\u003c/span\u003e \u003cspan class=\"token string\"\u003e\"next build \u0026#x26;\u0026#x26; next export\"\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e,\u003c/span\u003e\n  \u003cspan class=\"token punctuation\"\u003e}\u003c/span\u003e\n\u003cspan class=\"token punctuation\"\u003e}\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp\u003e在我的 package.json 文件里，我根据自己的情况对默认的配置进行了一点修改，我把默认的  \u003ccode\u003e\"build\": \"next build\"\u003c/code\u003e 改成了 \u003ccode\u003e\"build\": \"next build \u0026#x26;\u0026#x26; next export\"\u003c/code\u003e ，需要打包的时候可以直接用 \u003ccode\u003enpm run build\u003c/code\u003e 命令就可以打包了。你也可以根据自己的实际情况进行修改，当然了也可以不需要修改，直接使用默认的就好了。\u003c/p\u003e\n\u003cp\u003e修改信息\u003c/p\u003e\n\u003cul\u003e\n\u003cli\u003e\n\u003cul\u003e\n\u003cli\u003e4.1、可以把 \u003ccode\u003enpm run build\u003c/code\u003e 你想要的任何命令，这里随便你怎么改。\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003e\n\u003cul\u003e\n\u003cli\u003e4.2、\u003ccode\u003enext build\u003c/code\u003e 是 Next.js 提供的一个命令行工具，用于将 Next.js 应用程序构建为静态 HTML 文件和 JavaScript 文件的集合，以便在生产环境中进行部署。它会将应用程序的所有页面预渲染为静态 HTML 文件，以提高性能和搜索引擎优化。构建后的文件将存储在 \u003ccode\u003e.next\u003c/code\u003e 目录中。\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003e\n\u003cul\u003e\n\u003cli\u003e4.3、\u003ccode\u003enext export\u003c/code\u003e 是 Next.js 的一个命令，用于将 Next.js 应用程序导出为静态 HTML 文件。导出的静态文件存放在项目根目录的 out 文件夹里。\u003c/li\u003e\n\u003c/ul\u003e\n\u003c/li\u003e\n\u003cli\u003e\n\u003cp\u003e5、在 GitHub Pages 上配置好仓库的相关设置，需要新建一个新分支用来存放静态页。\u003c/p\u003e\n\u003c/li\u003e\n\u003c/ul\u003e\n\u003ch2\u003e仓库配置\u003c/h2\u003e\n\u003cp\u003e1、在 GitHub 新建一个仓库（已经建有仓库的可以省略这一步骤），建立仓库后会自动生成一个名为 main 的默认主分支。这个分支我们用来存放 Next.js 项目的源码文件，包括我们的 md 文件也在里面。\u003c/p\u003e\n\u003cp\u003e2、在这个仓库里再新建一个分支，我建立了一个名为 fanma 的分支。分支名你可以随便取，这个没什么要求。\u003c/p\u003e\n\u003cp\u003e这样我们的 GitHub 仓库里就有了两个分支，其中 main 默认主分支用来存放项目的所有源码文件。另外一个分支 fanma 用下存放静态文件，也就是用来运行网站的文件。\u003c/p\u003e\n\u003cp\u003e这样我们的仓库配置就基本完成了。\u003c/p\u003e\n\u003ch2\u003e自动部署\u003c/h2\u003e\n\u003cp\u003e在 GitHub Pages 托管平台上，我使用的是 GitHub Actions 来为 Next.js 项目搭建的网站来进行自动部署。\u003c/p\u003e\n\u003cp\u003e1、在仓库默认主分支 main 根目录创建一个名为 .github 的文件夹，在 .github 文件夹里再创建一个 workflows 工作流文件夹，继续再这个 workflows 新建一个 fanma.yml 的文件。\u003c/p\u003e\n\u003cp\u003e最终的文件路径为 .github/workflows/fanma.yml 完整的路径。\u003c/p\u003e\n\u003cp\u003e其中 fanma.yml 的文件名是可以随便取的，只要 .yml 文件后缀不变就可以了。\u003c/p\u003e\n\u003cp\u003e2、工作流文件 fanma.yml 配置如下：\u003c/p\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-yml\"\u003e\u003ccode class=\"language-yml\"\u003e\u003cspan class=\"token key atrule\"\u003ename\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e fanma\n\n\u003cspan class=\"token key atrule\"\u003eon\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e \n  \u003cspan class=\"token key atrule\"\u003epush\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e\n    \u003cspan class=\"token key atrule\"\u003ebranches\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e \u003cspan class=\"token punctuation\"\u003e[\u003c/span\u003emain\u003cspan class=\"token punctuation\"\u003e]\u003c/span\u003e\n  \u003cspan class=\"token key atrule\"\u003eworkflow_dispatch\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e\n\n\u003cspan class=\"token key atrule\"\u003ejobs\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e\n  \u003cspan class=\"token key atrule\"\u003edocs\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e\n    \u003cspan class=\"token key atrule\"\u003eruns-on\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e ubuntu\u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003elatest\n\n    \u003cspan class=\"token key atrule\"\u003esteps\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e\n      \u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003e \u003cspan class=\"token key atrule\"\u003euses\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e actions/checkout@v3\n        \u003cspan class=\"token key atrule\"\u003ewith\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e\n          \u003cspan class=\"token comment\"\u003e# “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录\u003c/span\u003e\n          \u003cspan class=\"token key atrule\"\u003efetch-depth\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e \u003cspan class=\"token number\"\u003e0\u003c/span\u003e\n      \u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003e \u003cspan class=\"token key atrule\"\u003ename\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e Setup pnpm\n        \u003cspan class=\"token key atrule\"\u003euses\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e pnpm/action\u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003esetup@v2\n        \u003cspan class=\"token key atrule\"\u003ewith\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e\n          \u003cspan class=\"token comment\"\u003e# 选择要使用的 pnpm 版本\u003c/span\u003e\n          \u003cspan class=\"token key atrule\"\u003eversion\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e \u003cspan class=\"token number\"\u003e7\u003c/span\u003e\n          \u003cspan class=\"token comment\"\u003e# 使用 pnpm 安装依赖\u003c/span\u003e\n          \u003cspan class=\"token key atrule\"\u003erun_install\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e \u003cspan class=\"token boolean important\"\u003etrue\u003c/span\u003e\n\n      \u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003e \u003cspan class=\"token key atrule\"\u003ename\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e Setup Node.js\n        \u003cspan class=\"token key atrule\"\u003euses\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e actions/setup\u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003enode@v3\n        \u003cspan class=\"token key atrule\"\u003ewith\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e\n          \u003cspan class=\"token comment\"\u003e# 选择要使用的 node 版本\u003c/span\u003e\n          \u003cspan class=\"token key atrule\"\u003enode-version\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e \u003cspan class=\"token number\"\u003e18\u003c/span\u003e\n          \u003cspan class=\"token comment\"\u003e# 缓存 pnpm 依赖\u003c/span\u003e\n          \u003cspan class=\"token key atrule\"\u003ecache\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e pnpm\n\n      \u003cspan class=\"token comment\"\u003e# 运行构建脚本\u003c/span\u003e\n      \u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003e \u003cspan class=\"token key atrule\"\u003ename\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e Build Next.js site\n        \u003cspan class=\"token key atrule\"\u003erun\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e npm run build\n\n      \u003cspan class=\"token comment\"\u003e# 查看 workflow 的文档来获取更多信息\u003c/span\u003e\n      \u003cspan class=\"token comment\"\u003e# @see https://github.com/crazy-max/ghaction-github-pages\u003c/span\u003e\n      \u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003e \u003cspan class=\"token key atrule\"\u003ename\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e Deploy to GitHub Pages\n        \u003cspan class=\"token key atrule\"\u003euses\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e crazy\u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003emax/ghaction\u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003egithub\u003cspan class=\"token punctuation\"\u003e-\u003c/span\u003epages@v2\n        \u003cspan class=\"token key atrule\"\u003ewith\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e\n          \u003cspan class=\"token comment\"\u003e# 部署到 gh-pages 分支\u003c/span\u003e\n          \u003cspan class=\"token key atrule\"\u003etarget_branch\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e fanma\n          \u003cspan class=\"token comment\"\u003e# 部署目录为 VuePress 的默认输出目录\u003c/span\u003e\n          \u003cspan class=\"token key atrule\"\u003ebuild_dir\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e out\n        \u003cspan class=\"token key atrule\"\u003eenv\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e\n          \u003cspan class=\"token comment\"\u003e# @see https://docs.github.com/cn/actions/reference/authentication-in-a-workflow#about-the-github_token-secret\u003c/span\u003e\n          \u003cspan class=\"token key atrule\"\u003eGITHUB_TOKEN\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e $\u003cspan class=\"token punctuation\"\u003e{\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e{\u003c/span\u003e secrets.GITHUB_TOKEN \u003cspan class=\"token punctuation\"\u003e}\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e}\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003cp\u003e上面就是我的工作流文件 fanma.yml 相关配置信息，现在已经是正常运行的，没有问题的。\u003c/p\u003e\n\u003cp\u003e下面这三个配置，需要根据你自己的实际情况进行配置：\u003c/p\u003e\n\u003cdiv class=\"remark-highlight\"\u003e\u003cpre class=\"language-yml\"\u003e\u003ccode class=\"language-yml\"\u003e\u003cspan class=\"token key atrule\"\u003erun\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e npm run build\n\u003cspan class=\"token key atrule\"\u003etarget_branch\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e fanma\n\u003cspan class=\"token key atrule\"\u003ebuild_dir\u003c/span\u003e\u003cspan class=\"token punctuation\"\u003e:\u003c/span\u003e out\n\u003c/code\u003e\u003c/pre\u003e\u003c/div\u003e\n\u003ch2\u003e自动部署完成\u003c/h2\u003e\n\u003cp\u003e到这里我们 Next.js 项目的自动部署就完成了，只要我们在本地新建文件或修改文件，进行 Push 就可以触发自动部署。\u003c/p\u003e\n\u003cp\u003e现在我们就不需要在本地进行打包生成静态页了，只要把 md 文件写好，打包生成静态页就 Push 就交给 GitHub Actions 帮我们自动部署就可以了。\u003c/p\u003e\n\u003ch2\u003e错误解决方案\u003c/h2\u003e\n\u003cp\u003e在配置自动部署中会遇到一些问题，下面的一些错误解决应该可以帮助得到你。\u003c/p\u003e\n\u003cp\u003e设置 GitHub Pages 工作流权限：\n\u003ca href=\"/blog/2023/4.html\"\u003eError The process '/usr/bin/git' failed with exit code 128\u003c/a\u003e\u003c/p\u003e\n","title":"使用 Next.js 自动将应用部署到 GitHub Pages","date":"2023-03-16","category":"Next.js","tag":["部署","GitHub","Pages"],"head":[["meta",{"name":"keywords","content":"Next.js,自动部署,GitHub Actions"}]]}},"__N_SSG":true},"page":"/blog/[...slug]","query":{"slug":["2023","5.html"]},"buildId":"G9tDxZSMHPW9bOXjOSX09","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>
